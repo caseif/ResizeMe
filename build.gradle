@@ -1,0 +1,49 @@
+// Apply Gradle plugins
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+}
+
+defaultTasks 'clean', 'build'
+
+// Project information
+group = 'net.amigocraft.resizeme'
+version = '1.0.0'
+
+// Extended project information
+ext.projectName = 'ResizeMe'
+ext.description = 'A silly Swing game that involves resizing the window.'
+ext.inceptionYear = '2012'
+ext.packaging = 'jar'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+// Read source files using UTF-8
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'net.amigocraft.resizeme.Main'
+        )
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.java
+    from sourceSets.main.resources
+    classifier = 'sources'
+}
+
+artifacts {
+    jar
+    sourceJar
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+}
